@@ -1,7 +1,7 @@
 {
     "name": "pitch/form",
     "description": "Form action",
-    "keywords": ["Symfony", "Controller", "ADR", "Action"],
+    "keywords": ["Symfony", "Controller", "Form", "Annotation"],
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
