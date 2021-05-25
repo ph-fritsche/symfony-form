@@ -7,6 +7,7 @@ use Pitch\Form\FormEntityFactoryInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
+use Throwable;
 
 class FormEntityFactoryPass implements CompilerPassInterface
 {
@@ -14,7 +15,16 @@ class FormEntityFactoryPass implements CompilerPassInterface
     {
         $formEntityFactories = [];
         foreach ($container->getDefinitions() as $id => $definition) {
-            if (\is_a($definition->getClass(), FormEntityFactoryInterface::class, true)) {
+            $class = $definition->getClass();
+            try {
+                if (!\class_exists($class)) {
+                    continue;
+                }
+            } catch (Throwable $e) {
+                continue;
+            }
+
+            if (\is_a($class, FormEntityFactoryInterface::class, true)) {
                 $formEntityFactories[$id] = new Reference($id);
             }
         }

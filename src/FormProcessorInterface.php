@@ -9,5 +9,5 @@ interface FormProcessorInterface
     public function handleFormRequest(
         FormInterface $form,
         Request $request
-    ): mixed;
+    );
 }

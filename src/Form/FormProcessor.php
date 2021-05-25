@@ -11,7 +11,7 @@ class FormProcessor implements FormProcessorInterface
     public function handleFormRequest(
         FormInterface $form,
         Request $request
-    ): mixed {
+    ) {
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {

@@ -60,8 +60,9 @@ class ControllerSubscriber implements EventSubscriberInterface
                 $entityFactory = $this->formEntityFactories[$annotation->entityFactory];
                 $entity = $entityFactory->createEntity($event, $annotation->entity);
             } else {
-                $entity = $annotation->entity
-                    ? new ($annotation->entity)()
+                $entityClass = $annotation->entity;
+                $entity = $entityClass
+                    ? new $entityClass()
                     : null;
             }
 
