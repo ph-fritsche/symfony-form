@@ -1,0 +1,42 @@
+{
+    "name": "pitch/form",
+    "description": "Form action",
+    "keywords": ["Symfony", "Controller", "ADR", "Action"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Philipp Fritsche",
+            "email": "ph.fritsche@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Pitch\\Form\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pitch\\Form\\": "test/"
+        }
+    },
+    "require": {
+        "php": ">=7.4",
+        "pitch/annotation": "^1",
+        "symfony/form": "^5"
+    },
+    "require-dev": {
+        "doctrine/annotations": "^1.12",
+        "doctrine/cache": "^2.0",
+        "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "^3.6",
+        "symfony/http-kernel": "^5.0.6",
+        "symfony/framework-bundle": "^5"
+    },
+    "scripts": {
+        "lint": "phpcs",
+        "lint-fix" : "phpcbf",
+        "test": "phpunit",
+        "test-s": "phpunit --stop-on-failure"
+    }
+}
