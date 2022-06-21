@@ -17,7 +17,7 @@ class FormEntityFactoryPass implements CompilerPassInterface
         foreach ($container->getDefinitions() as $id => $definition) {
             $class = $definition->getClass();
             try {
-                if (!\class_exists($class)) {
+                if (!$class || !\class_exists($class)) {
                     continue;
                 }
             } catch (Throwable $e) {
