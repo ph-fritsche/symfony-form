@@ -4,6 +4,7 @@ namespace Pitch\Form;
 use Closure;
 use DateTime;
 use Pitch\Annotation\PitchAnnotationBundle;
+use Pitch\Form\Fixtures\MyEntityType;
 use Pitch\Form\Form;
 use Pitch\Form\Fixtures\MyFormEntityFactory;
 use stdClass;
@@ -230,6 +231,39 @@ class PitchFormBundleTest extends KernelTestCase
             'someText' => 'foo',
             'someDate' => new DateTime('2001-02-03'),
         ], (array) $data);
+    }
+
+    public function testEntityFromAttributes()
+    {
+        $controller = new class
+        {
+            /**
+             * @Form("Pitch\Form\Fixtures\MyFormType", dataAttr="entity")
+             */
+            public function __invoke()
+            {
+            }
+        };
+        $entity = new MyEntityType();
+        $request = new Request([], [
+            'form' => [
+                'someText' => 'foo',
+                'someDate' => '2001-02-03',
+            ],
+        ], [
+            'entity' => $entity,
+        ], [], [], ['REQUEST_METHOD' => 'POST']);
+
+        $event = new ControllerEvent(self::$kernel, $controller, $request, null);
+        $this->dispatcher->dispatch($event, KernelEvents::CONTROLLER);
+
+        $this->assertInstanceOf(FormInterface::class, $request->attributes->get('form'));
+        $this->assertSame($request->attributes->get('entity'), $entity);
+        $this->assertSame($request->attributes->get('form')->getData(), $entity);
+        $this->assertEquals([
+            'someText' => 'foo',
+            'someDate' => new DateTime('2001-02-03'),
+        ], (array) $entity);
     }
 
     public function testDisableControllerReplacement()
